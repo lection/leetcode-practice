@@ -1,18 +1,26 @@
+"""
+第一直觉 暴力全组合 必然超时
+==================================
+DP方案 dp[i] = 1 + max(dp[filter(x < mums[i])])
+n^2 方案
+"""
+
+
 class Solution:
     def lengthOfLIS(self, nums) -> int:
         if not nums:
             return 0
 
-        def dfs(curr, idx):
-            if idx >= len(nums):
-                return len(curr)
-            v = nums[idx]
-            idx += 1
-            if curr and curr[-1] >= v:
-                return dfs(curr, idx)
-            return max(dfs(curr + [v], idx), dfs(curr, idx))
+        dp = [1] * len(nums)
 
-        return dfs([], 0)
+        for i in range(1, len(nums)):
+            dp[i] = 1 + max(
+                (
+                    dp[x] if nums[x] < nums[i] else 0 for x in range(i+1)
+                )
+            )
+
+        return max(dp)
 
 
 s = Solution()
