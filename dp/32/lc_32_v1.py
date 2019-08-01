@@ -29,8 +29,13 @@ class Solution:
 
         dp = [-1] * len(s)
         result = 0
-        for i in range(len(s) - 1):
-            if dp[i] != -1 or s[i] != '(' or s[i+1] != ')':
+        i = 0
+
+        last_index = len(s) - 1
+        while i < last_index:
+
+            if dp[i] != -1 or s[i] != '(' or s[i + 1] != ')':
+                i += 1
                 continue
 
             start, end = i, i + 1
@@ -40,23 +45,26 @@ class Solution:
                 dp[end] = start
                 result = max(result, end - start + 1)
 
-                if start > 0 and dp[start-1] != -1:
+                if start > 0 and dp[start - 1] != -1:
                     start = dp[start - 1]
                     continue
 
-                if end < (len(s)-1) and dp[end+1] != -1:
+                if end < last_index and dp[end + 1] != -1:
                     end = dp[end + 1]
                     continue
 
-                if start != 0 and end != (len(s) - 1) and s[start - 1] == '(' and s[end+1] == ')':
+                if start != 0 and end != last_index and s[start - 1] == '(' and s[end + 1] == ')':
                     start -= 1
                     end += 1
                     continue
 
                 break
+
+            i = end + 1
         return result
 
 
 s = Solution()
 print(s.longestValidParentheses("(()") == 2)
 print(s.longestValidParentheses(")()())") == 4)
+print(s.longestValidParentheses("(") == 0)
