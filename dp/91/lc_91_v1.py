@@ -24,6 +24,8 @@
 ==================================
 用例中有一个隐藏的规则，就是无效的数字出现就是解码失败 比如 01 太烦人
 总算过了。。。。居然只打败了5%。。。。
+=================================
+之前是失误了 由于cache默认有0的存在 所以出现了重复计算 改成None之后就打败95%了
 """
 ORD_6 = ord('6')
 
@@ -35,7 +37,7 @@ class Solution:
 
         last_index = len(s) - 1
 
-        cache = [0] * len(s)
+        cache = [None] * len(s)
 
         def rec(idx):
             if idx > last_index:
@@ -43,7 +45,7 @@ class Solution:
             if idx == last_index:
                 return 0 if s[idx] == '0' else 1
 
-            if not cache[idx]:
+            if cache[idx] is None:
                 letter = s[idx]
                 if letter == '0':
                     return 0
