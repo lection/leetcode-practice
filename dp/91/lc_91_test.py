@@ -1,28 +1,27 @@
-"""
-DP解法
-轻松打败 87% 可惜内存占用较高 v3进行优化
-刷两次 打败了 95%
-"""
 ORD_6 = ord('6')
 
 
 class Solution:
     def numDecodings(self, s: str) -> int:
-        if not s or s == '0':
+        if not s:
             return 0
 
+        last_index = len(s) - 1
         dp = [0] * (len(s) + 1)
+
         dp[-1] = 1
-        dp[-2] = 0 if s[len(s) - 1] == '0' else 1
+        if s[last_index] != '0':
+            dp[-2] = 1
 
-        for i in range(len(s) - 2, -1, -1):
-            letter = s[i]
-            if letter == '0':
+        for idx in range(len(s) - 2, -1, -1):
+            c = s[idx]
+            if c == '0':
                 continue
+            r = dp[idx + 1]
+            if c == '1' or (c == '2' and ord(s[idx + 1]) <= ORD_6):
+                r += dp[idx + 2]
 
-            dp[i] += dp[i+1]
-            if letter == '1' or (letter == '2' and ord(s[i+1]) <= ORD_6):
-                dp[i] += dp[i+2]
+            dp[idx] = r
 
         return dp[0]
 
@@ -36,3 +35,5 @@ print(s.numDecodings('00') == 0)
 print(s.numDecodings('000') == 0)
 print(s.numDecodings('071') == 0)
 print(s.numDecodings('226') == 3)
+print(s.numDecodings('230') == 0)
+print(s.numDecodings('12120') == 3)
