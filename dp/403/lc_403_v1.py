@@ -30,7 +30,12 @@
 返回 false。青蛙没有办法过河。
 这是因为第5和第6个石子之间的间距太大，没有可选的方案供青蛙跳跃过去。
 ==============
+调整k+1 k k-1的判断顺序，先从k+1开始，因为可能会更快触及到终点。
+确实提高了速度 144ms 更快 打败88%。
+==============
 先来个回溯
+时间复杂度 无缓存的情况下 3^n
+引入缓存有点儿麻烦 暂时没想清楚
 """
 
 
@@ -58,7 +63,7 @@ class Solution:
                 if v == stones[next_idx]:
                     v = stones[next_idx]
                     next_idx += 1
-                    r = rec(next_idx, v, k - 1) or rec(next_idx, v, k) or rec(next_idx, v, k + 1)
+                    r = rec(next_idx, v, k + 1) or rec(next_idx, v, k) or rec(next_idx, v, k - 1)
                     break
 
             cache[idx][k] = r
