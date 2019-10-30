@@ -8,6 +8,7 @@ DP实现 还真得琢磨琢磨 由于k的不固定性 每个位置所有的状�
 速度比回溯慢
 目前猜测是回溯本身的判断有提前结束的功能，而这边暂时没有，故每次触及之后都判断一下试试。
 ============= 提前结束没啥用 再说吧 暂时速度确实不够理想
+优化一下 dp数组可以和数值的map合并可以提高速度
 """
 
 
@@ -16,32 +17,27 @@ class Solution:
         if not stones:
             return False
 
-        dp = [set() for _ in stones]
+        dp = {}
+        for v in stones:
+            dp[v] = set()
         dp[0].add(0)
 
-        idx_map = {}
-        for idx in range(len(stones)):
-            idx_map[stones[idx]] = idx
+        last_set = dp[stones[-1]]
 
         def fn(v, k):
             if k <= 0:
                 return
             v += k
-            if v not in idx_map:
+            if v not in dp:
                 return
-            dp[idx_map[v]].add(k)
+            dp[v].add(k)
 
-        for idx in range(len(stones)):
-            v = stones[idx]
-            for k in dp[idx]:
+        for v in stones:
+            for k in dp[v]:
                 fn(v, k + 1)
-                if len(dp[-1]) > 0:
-                    return True
                 fn(v, k)
-                if len(dp[-1]) > 0:
-                    return True
                 fn(v, k - 1)
-                if len(dp[-1]) > 0:
+                if len(last_set) > 0:
                     return True
 
         return False
