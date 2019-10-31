@@ -7,7 +7,8 @@ matrix[m][n] = matrix[m][n] + matrix[m-1][n] + matrix[m][n-1] - matrix[m-1][n-1]
 矩形 m1n1m2n2 的值为
 r = matrix[m2][n2] - matrix[m2][n1] - matrix[m1][n2] + matrix[m1][n1]
 如果 r == k 则可以提前返回
-============= 可惜在有一个更加巨大的用例面前，超时了
+============= 可惜在有一个更加巨大的用例面前，超时了,难道有优化成 m*n的方法？？
+把 result = max(result, area) 改成 if 判断 速度略微提高 但意义不大
 """
 
 
@@ -37,16 +38,16 @@ class Solution:
                 for r2 in range(r1, row_length):
                     for c2 in range(c1, col_length):
                         area = matrix[r2][c2]
-                        if r2 > r1:
-                            area -= matrix[r1][c2]
-                        if c2 > c1:
-                            area -= matrix[r2][c1]
                         if r2 > r1 and c2 > c1:
-                            area += matrix[r1][c1]
+                            area -= matrix[r1][c2] + matrix[r2][c1] - matrix[r1][c1]
+                        elif r2 > r1:
+                            area -= matrix[r1][c2]
+                        elif c2 > c1:
+                            area -= matrix[r2][c1]
                         if area == k:
                             return k
-                        if area < k:
-                            result = max(result, area)
+                        if result < area < k:
+                            result = area
 
         return result
 
