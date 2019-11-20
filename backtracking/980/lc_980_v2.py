@@ -9,6 +9,7 @@
 
 class Solution:
     def uniquePathsIII(self, grid) -> int:
+        # 没有DP方案
         if not grid or not grid[0]:
             return 0
 
