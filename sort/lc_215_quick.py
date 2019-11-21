@@ -16,6 +16,9 @@
 用快速排序的思路做选择 时间复杂度 O(n)
 这个比直接用最小堆更难想到
 速度很慢，什么鬼
+================
+我猜测是有测试用例给我添乱 我加上extract_pivot方法 三个数抽取一个 弄不死他
+立竿见影 瞬间打败 98.15%
 """
 
 class Solution:
@@ -23,9 +26,22 @@ class Solution:
         if not nums or len(nums) < k:
             return None
 
+        def extract_pivot(li, ri):
+            if li >= ri - 1:
+                return li
+            # 左中右三个抽样 选出中间值
+            mi = li + (ri - li) // 2
+            if nums[li] > nums[mi]:
+                mi, li = li, mi
+            if nums[ri] > nums[mi]:
+                nums[mi], nums[ri] = nums[ri], nums[mi]
+            elif nums[ri] < nums[li]:
+                nums[li], nums[ri] = nums[ri], nums[li]
+
         def partition(li, ri):
             if li >= ri:
                 return li
+            extract_pivot(li, ri)
             pivot = nums[ri]
             idx = left
             for i in range(li, ri):
