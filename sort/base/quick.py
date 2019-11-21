@@ -13,18 +13,19 @@ def quick_sort(array):
         quick_fn(left, pivot_idx - 1)
         quick_fn(pivot_idx + 1, right)
 
+    # 各种pivot的抽取实现 并交换到right
     def extract_pivot(left, right):
-        return right
+        pass
 
     def partition(left, right):
-        pivot_idx = extract_pivot(left, right)
-        pivot = array[pivot_idx]
+        extract_pivot(left, right)
+        pivot = array[right]
         idx = left
         for i in range(left, right):
             if array[i] < pivot:
                 array[idx], array[i] = array[i], array[idx]
                 idx += 1
-        array[idx], array[pivot_idx] = array[pivot_idx], array[idx]
+        array[idx], array[right] = array[right], array[idx]
         return idx
 
     quick_fn(0, len(array) - 1)
