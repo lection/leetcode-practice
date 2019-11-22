@@ -1,9 +1,9 @@
-import practice
-import bubble
-import insertion
-import selection
-import merge
-import quick
+from compare import practice
+from compare import bubble
+from compare import insertion
+from compare import selection
+from compare import merge
+from compare import quick
 
 # sort_fn = practice.sort_fn
 # sort_fn = bubble.bubble_sort
