@@ -4,13 +4,15 @@ from compare import insertion
 from compare import selection
 from compare import merge
 from compare import quick
+from linear import counting
 
 # sort_fn = practice.sort_fn
 # sort_fn = bubble.bubble_sort
 # sort_fn = insertion.insertion_sort
 # sort_fn = selection.selection_sort
 # sort_fn = merge.merge_sort
-sort_fn = quick.quick_sort
+# sort_fn = quick.quick_sort
+sort_fn = counting.counting_sort
 
 cases = [
     [1, 1, 3, 5, 8, 9],
