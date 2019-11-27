@@ -7,14 +7,11 @@
 网友居然用转成list再sort的方式 太不要脸了
 =========
 没精力折腾了 就先酱紫吧
+=========
+我特么是不是傻 何必反转两次呢 直接一次按从大到小就行了
 """
 from utils import list_util
 
-# Definition for singly-linked list.
-# class ListNode:
-#     def __init__(self, x):
-#         self.val = x
-#         self.next = None
 
 class Solution:
     def insertionSortList(self, head):
@@ -26,26 +23,18 @@ class Solution:
         last.next = None
         while cur is not None:
             cur_next = cur.next
-            if cur.val >= last.val:
+            if cur.val <= last.val:
                 cur.next = last
                 last = cur
             else:
                 temp = last
                 temp_next = temp.next
-                while temp_next is not None and temp_next.val > cur.val:
+                while temp_next is not None and temp_next.val < cur.val:
                     temp = temp_next
                     temp_next = temp.next
                 cur.next = temp_next
                 temp.next = cur
             cur = cur_next
-
-        # 反转
-        cur = last.next
-        last.next = None
-        while cur is not None:
-            cur_next = cur.next
-            cur.next = last
-            cur, last = cur_next, cur
 
         return last
 
